@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Vehicle;
+
 class VehicleController extends Controller
 {
     /**
@@ -16,6 +18,8 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        return 'hello from vehicles';
+        $vehicle = Vehicle::all();
+
+        return response()->json(['data' => $vehicle], 200);
     }
 }
