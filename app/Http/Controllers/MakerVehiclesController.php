@@ -110,8 +110,22 @@ class MakerVehiclesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($makerID, $vehicleID)
     {
-        //
+        $maker = Maker::find($makerID);
+
+        if (!$maker) {
+            return response()->json(['message' => 'This maker does not exist', 'code' => 404], 404);
+        }
+
+        $vehicle = $maker->vehicle->find($vehicleID);
+
+        if (!$vehicle) {
+            return response()->json(['message' => 'This vehicle does not exist/belongs to this maker', 'code' => 404], 404);
+        }
+
+        $vehicle->delete();
+
+        return response()->json(['message' => 'The vehicle has been deleted'], 200);
     }
 }
